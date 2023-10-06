@@ -16,10 +16,11 @@ const month = [
   "Nov",
   "Dec",
 ];
+
+//this is Card Component.It contain Card Details
 const TaskCard = ({ task, onDelete }) => {
   const [dateTime, setDateTime] = useState("DD/MM/YYYY HH:mm");
   useEffect(() => {
-    // console.log(Date.parse(new Date(task.dueDate)), Date.now());
     let d = new Date(task.dueDate);
     setDateTime(
       `${d.getDate()}-${
@@ -36,7 +37,6 @@ const TaskCard = ({ task, onDelete }) => {
             ? "bg-secondary"
             : "bg-success"
         } text-light`}
-        // style={{ height: "350px" }}
       >
         <Card.Body>
           <Card.Title className="d-flex justify-content-between">

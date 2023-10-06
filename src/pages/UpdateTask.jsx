@@ -3,6 +3,7 @@ import { Alert, Button, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import Axios from "axios";
 
+//useParams is used to get Params ID
 const UpdateTask = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -11,7 +12,6 @@ const UpdateTask = () => {
     title: "",
     description: "",
     dueDate: "",
-    // status: "",
   });
   useEffect(() => {
     Axios.get(`http://localhost:8080/api/singletask/${id}`).then((res) => {
@@ -28,7 +28,6 @@ const UpdateTask = () => {
           }T${d.getHours() <= 9 ? "0" + d.getHours() : d.getHours()}:${
             d.getMinutes() <= 9 ? "0" + d.getMinutes() : d.getMinutes()
           }`,
-          //   status: res.data.data.status,
         });
       } else {
         console.log(res);
@@ -36,6 +35,7 @@ const UpdateTask = () => {
     });
   }, [id]);
 
+  //before Updating a task details. It check that all the fields are filled or not.
   const handleChange = (e) => {
     setTaskInput({ ...taskInput, [e.target.name]: e.target.value });
   };
@@ -57,7 +57,6 @@ const UpdateTask = () => {
       );
     }
   };
-  console.log(taskInput.dueDate, id);
   return (
     <div className="d-flex my-4 px-4 text-light">
       <div className="container formLayout">

@@ -8,15 +8,21 @@ const Dashboard = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [taskList, setTaskList] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  //getTaskList method call when page state changes
   useEffect(() => {
     getTaskList();
   }, [page]);
+
+  //this method is used to fetch task list according to page number
   const getTaskList = async () => {
     Axios.get(`http://localhost:8080/api/gettaskList?page=${page}`).then(
       (res) => {
         if (res.status === 200) {
           setTaskList(res.data.data);
           console.log(res.data.data);
+          setLoading(false);
           setTotalPages(res.data.totalPages);
         } else {
           console.log(res);
@@ -25,6 +31,7 @@ const Dashboard = () => {
     );
   };
 
+  //for this method is used to delete specific task data
   const deleteTask = async (id) => {
     Axios.delete(`http://localhost:8080/api/deletetask/${id}`).then((res) => {
       if (res.status === 200) {
@@ -34,7 +41,6 @@ const Dashboard = () => {
       }
     });
   };
-  console.log(taskList);
   return (
     <>
       <div className="container my-4 px-4">
@@ -43,7 +49,11 @@ const Dashboard = () => {
             Create New Task
           </Link>
         </div>
-        {taskList.length === 0 ? (
+        {loading ? (
+          <Container>
+            <h1 className="text-light text-center">Loading...</h1>
+          </Container>
+        ) : taskList.length === 0 ? (
           <Container className="mt-3">
             <h1 className="text-light text-break">No Task Added yet!</h1>
           </Container>

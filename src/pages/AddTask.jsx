@@ -15,6 +15,8 @@ const AddTask = () => {
   const handleChange = (e) => {
     setTaskInput({ ...taskInput, [e.target.name]: e.target.value });
   };
+
+  //before submitting a task details. It check that all the fields are filled or not.
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (
